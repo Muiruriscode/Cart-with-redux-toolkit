@@ -2,7 +2,8 @@
 
 #### React Course
 
-[My React Course](https://www.udemy.com/course/react-tutorial-and-projects-course/?referralCode=FEE6A921AF07E2563CEF)
+This is a project for Redux tookit guided by Jon Smilga from coding Addict
+[React Course](https://www.udemy.com/course/react-tutorial-and-projects-course/?referralCode=FEE6A921AF07E2563CEF)
 
 #### Support
 
@@ -53,11 +54,11 @@ connects our app to redux
 - create store.js
 
 ```js
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
   reducer: {},
-});
+})
 ```
 
 #### Setup Provider
@@ -65,13 +66,13 @@ export const store = configureStore({
 - index.js
 
 ```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
 // import store and provider
-import { store } from './store';
-import { Provider } from 'react-redux';
+import { store } from './store'
+import { Provider } from 'react-redux'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -80,7 +81,7 @@ ReactDOM.render(
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
-);
+)
 ```
 
 #### Setup Cart Slice
@@ -90,36 +91,36 @@ ReactDOM.render(
 - create cartSlice.js
 
 ```js
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   cartItems: [],
   amount: 0,
   total: 0,
   isLoading: true,
-};
+}
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
-});
+})
 
-console.log(cartSlice);
+console.log(cartSlice)
 
-export default cartSlice.reducer;
+export default cartSlice.reducer
 ```
 
 - store.js
 
 ```js
-import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from './features/cart/cartSlice';
+import { configureStore } from '@reduxjs/toolkit'
+import cartReducer from './features/cart/cartSlice'
 
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
   },
-});
+})
 ```
 
 #### Redux DevTools
@@ -131,11 +132,11 @@ export const store = configureStore({
 - create components/Navbar.js
 
 ```js
-import { CartIcon } from '../icons';
-import { useSelector } from 'react-redux';
+import { CartIcon } from '../icons'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
-  const { amount } = useSelector((state) => state.cart);
+  const { amount } = useSelector((state) => state.cart)
 
   return (
     <nav>
@@ -149,9 +150,9 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-  );
-};
-export default Navbar;
+  )
+}
+export default Navbar
 ```
 
 #### Hero Icons
@@ -170,26 +171,26 @@ nav svg {
 - cartSlice.js
 
 ```js
-import cartItems from '../../cartItems';
+import cartItems from '../../cartItems'
 
 const initialState = {
   cartItems: cartItems,
   amount: 0,
   total: 0,
   isLoading: true,
-};
+}
 ```
 
 - create CartContainer.js and CartItem.js
 - CartContainer.js
 
 ```js
-import React from 'react';
-import CartItem from './CartItem';
-import { useSelector } from 'react-redux';
+import React from 'react'
+import CartItem from './CartItem'
+import { useSelector } from 'react-redux'
 
 const CartContainer = () => {
-  const { cartItems, total, amount } = useSelector((state) => state.cart);
+  const { cartItems, total, amount } = useSelector((state) => state.cart)
 
   if (amount < 1) {
     return (
@@ -200,7 +201,7 @@ const CartContainer = () => {
           <h4 className='empty-cart'>is currently empty</h4>
         </header>
       </section>
-    );
+    )
   }
   return (
     <section className='cart'>
@@ -211,7 +212,7 @@ const CartContainer = () => {
       {/* cart items */}
       <div>
         {cartItems.map((item) => {
-          return <CartItem key={item.id} {...item} />;
+          return <CartItem key={item.id} {...item} />
         })}
       </div>
       {/* cart footer */}
@@ -225,17 +226,17 @@ const CartContainer = () => {
         <button className='btn clear-btn'>clear cart</button>
       </footer>
     </section>
-  );
-};
+  )
+}
 
-export default CartContainer;
+export default CartContainer
 ```
 
 - CartItems.js
 
 ```js
-import React from 'react';
-import { ChevronDown, ChevronUp } from '../icons';
+import React from 'react'
+import { ChevronDown, ChevronUp } from '../icons'
 
 const CartItem = ({ id, img, title, price, amount }) => {
   return (
@@ -260,10 +261,10 @@ const CartItem = ({ id, img, title, price, amount }) => {
         </button>
       </div>
     </article>
-  );
-};
+  )
+}
 
-export default CartItem;
+export default CartItem
 ```
 
 #### First Reducer
@@ -277,47 +278,47 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     clearCart: (state) => {
-      state.cartItems = [];
+      state.cartItems = []
     },
   },
-});
+})
 
-export const { clearCart } = cartSlice.actions;
+export const { clearCart } = cartSlice.actions
 ```
 
 - create action
 
 ```js
-const ACTION_TYPE = 'ACTION_TYPE';
+const ACTION_TYPE = 'ACTION_TYPE'
 
 const actionCreator = (payload) => {
-  return { type: ACTION_TYPE, payload: payload };
-};
+  return { type: ACTION_TYPE, payload: payload }
+}
 ```
 
 - CartContainer.js
 
 ```js
-import React from 'react';
-import CartItem from './CartItem';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+import CartItem from './CartItem'
+import { useDispatch, useSelector } from 'react-redux'
 
 const CartContainer = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return (
     <button
       className='btn clear-btn'
       onClick={() => {
-        dispatch(clearCart());
+        dispatch(clearCart())
       }}
     >
       clear cart
     </button>
-  );
-};
+  )
+}
 
-export default CartContainer;
+export default CartContainer
 ```
 
 #### Remove, Increase, Decrease
@@ -325,65 +326,65 @@ export default CartContainer;
 - cartSlice.js
 
 ```js
-import { createSlice } from '@reduxjs/toolkit';
-import cartItems from '../../cartItems';
+import { createSlice } from '@reduxjs/toolkit'
+import cartItems from '../../cartItems'
 
 const initialState = {
   cartItems: [],
   amount: 0,
   total: 0,
   isLoading: true,
-};
+}
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     clearCart: (state) => {
-      state.cartItems = [];
+      state.cartItems = []
     },
     removeItem: (state, action) => {
-      const itemId = action.payload;
-      state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
+      const itemId = action.payload
+      state.cartItems = state.cartItems.filter((item) => item.id !== itemId)
     },
     increase: (state, { payload }) => {
-      const cartItem = state.cartItems.find((item) => item.id === payload.id);
-      cartItem.amount = cartItem.amount + 1;
+      const cartItem = state.cartItems.find((item) => item.id === payload.id)
+      cartItem.amount = cartItem.amount + 1
     },
     decrease: (state, { payload }) => {
-      const cartItem = state.cartItems.find((item) => item.id === payload.id);
-      cartItem.amount = cartItem.amount - 1;
+      const cartItem = state.cartItems.find((item) => item.id === payload.id)
+      cartItem.amount = cartItem.amount - 1
     },
     calculateTotals: (state) => {
-      let amount = 0;
-      let total = 0;
+      let amount = 0
+      let total = 0
       state.cartItems.forEach((item) => {
-        amount += item.amount;
-        total += item.amount * item.price;
-      });
-      state.amount = amount;
-      state.total = total;
+        amount += item.amount
+        total += item.amount * item.price
+      })
+      state.amount = amount
+      state.total = total
     },
   },
-});
+})
 
 export const { clearCart, removeItem, increase, decrease, calculateTotals } =
-  cartSlice.actions;
+  cartSlice.actions
 
-export default cartSlice.reducer;
+export default cartSlice.reducer
 ```
 
 - CartItem.js
 
 ```js
-import React from 'react';
-import { ChevronDown, ChevronUp } from '../icons';
+import React from 'react'
+import { ChevronDown, ChevronUp } from '../icons'
 
-import { useDispatch } from 'react-redux';
-import { removeItem, increase, decrease } from '../features/cart/cartSlice';
+import { useDispatch } from 'react-redux'
+import { removeItem, increase, decrease } from '../features/cart/cartSlice'
 
 const CartItem = ({ id, img, title, price, amount }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return (
     <article className='cart-item'>
@@ -395,7 +396,7 @@ const CartItem = ({ id, img, title, price, amount }) => {
         <button
           className='remove-btn'
           onClick={() => {
-            dispatch(removeItem(id));
+            dispatch(removeItem(id))
           }}
         >
           remove
@@ -406,7 +407,7 @@ const CartItem = ({ id, img, title, price, amount }) => {
         <button
           className='amount-btn'
           onClick={() => {
-            dispatch(increase({ id }));
+            dispatch(increase({ id }))
           }}
         >
           <ChevronUp />
@@ -418,47 +419,47 @@ const CartItem = ({ id, img, title, price, amount }) => {
           className='amount-btn'
           onClick={() => {
             if (amount === 1) {
-              dispatch(removeItem(id));
-              return;
+              dispatch(removeItem(id))
+              return
             }
-            dispatch(decrease({ id }));
+            dispatch(decrease({ id }))
           }}
         >
           <ChevronDown />
         </button>
       </div>
     </article>
-  );
-};
+  )
+}
 
-export default CartItem;
+export default CartItem
 ```
 
 - App.js
 
 ```js
-import { useEffect } from 'react';
-import Navbar from './components/Navbar';
-import CartContainer from './components/CartContainer';
-import { useSelector, useDispatch } from 'react-redux';
-import { calculateTotals } from './features/cart/cartSlice';
+import { useEffect } from 'react'
+import Navbar from './components/Navbar'
+import CartContainer from './components/CartContainer'
+import { useSelector, useDispatch } from 'react-redux'
+import { calculateTotals } from './features/cart/cartSlice'
 
 function App() {
-  const { cartItems } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+  const { cartItems } = useSelector((state) => state.cart)
+  const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(calculateTotals());
-  }, [cartItems]);
+    dispatch(calculateTotals())
+  }, [cartItems])
 
   return (
     <main>
       <Navbar />
       <CartContainer />
     </main>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 #### Modal
@@ -481,9 +482,9 @@ const Modal = () => {
         </div>
       </div>
     </aside>
-  );
-};
-export default Modal;
+  )
+}
+export default Modal
 ```
 
 - App.js
@@ -495,7 +496,7 @@ return (
     <Navbar />
     <CartContainer />
   </main>
-);
+)
 ```
 
 #### modal slice
@@ -503,32 +504,32 @@ return (
 - create features/modal/modalSlice.js
 
 ```js
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   isOpen: false,
-};
+}
 
 const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
     openModal: (state, action) => {
-      state.isOpen = true;
+      state.isOpen = true
     },
     closeModal: (state, action) => {
-      state.isOpen = false;
+      state.isOpen = false
     },
   },
-});
+})
 
-export const { openModal, closeModal } = modalSlice.actions;
-export default modalSlice.reducer;
+export const { openModal, closeModal } = modalSlice.actions
+export default modalSlice.reducer
 ```
 
 - App.js
 
 ```js
-const { isOpen } = useSelector((state) => state.modal);
+const { isOpen } = useSelector((state) => state.modal)
 
 return (
   <main>
@@ -536,7 +537,7 @@ return (
     <Navbar />
     <CartContainer />
   </main>
-);
+)
 ```
 
 #### toggle modal
@@ -544,29 +545,29 @@ return (
 - CartContainer.js
 
 ```js
-import { openModal } from '../features/modal/modalSlice';
+import { openModal } from '../features/modal/modalSlice'
 
 return (
   <button
     className='btn clear-btn'
     onClick={() => {
-      dispatch(openModal());
+      dispatch(openModal())
     }}
   >
     clear cart
   </button>
-);
+)
 ```
 
 - Modal.js
 
 ```js
-import { closeModal } from '../features/modal/modalSlice';
-import { useDispatch } from 'react-redux';
-import { clearCart } from '../features/cart/cartSlice';
+import { closeModal } from '../features/modal/modalSlice'
+import { useDispatch } from 'react-redux'
+import { clearCart } from '../features/cart/cartSlice'
 
 const Modal = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return (
     <aside className='modal-container'>
@@ -577,8 +578,8 @@ const Modal = () => {
             type='button'
             className='btn confirm-btn'
             onClick={() => {
-              dispatch(clearCart());
-              dispatch(closeModal());
+              dispatch(clearCart())
+              dispatch(closeModal())
             }}
           >
             confirm
@@ -587,7 +588,7 @@ const Modal = () => {
             type='button'
             className='btn clear-btn'
             onClick={() => {
-              dispatch(closeModal());
+              dispatch(closeModal())
             }}
           >
             cancel
@@ -595,9 +596,9 @@ const Modal = () => {
         </div>
       </div>
     </aside>
-  );
-};
-export default Modal;
+  )
+}
+export default Modal
 ```
 
 #### async functionality with createAsyncThunk
@@ -611,53 +612,53 @@ export default Modal;
 - lifecycle actions
 
 ```js
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-const url = 'https://course-api.com/react-useReducer-cart-project';
+const url = 'https://course-api.com/react-useReducer-cart-project'
 
 export const getCartItems = createAsyncThunk('cart/getCartItems', () => {
   return fetch(url)
     .then((resp) => resp.json())
-    .catch((err) => console.log(error));
-});
+    .catch((err) => console.log(error))
+})
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   extraReducers: {
     [getCartItems.pending]: (state) => {
-      state.isLoading = true;
+      state.isLoading = true
     },
     [getCartItems.fulfilled]: (state, action) => {
-      console.log(action);
-      state.isLoading = false;
-      state.cartItems = action.payload;
+      console.log(action)
+      state.isLoading = false
+      state.cartItems = action.payload
     },
     [getCartItems.rejected]: (state) => {
-      state.isLoading = false;
+      state.isLoading = false
     },
   },
-});
+})
 ```
 
 - App.js
 
 ```js
-import { calculateTotals, getCartItems } from './features/cart/cartSlice';
+import { calculateTotals, getCartItems } from './features/cart/cartSlice'
 
 function App() {
-  const { cartItems, isLoading } = useSelector((state) => state.cart);
+  const { cartItems, isLoading } = useSelector((state) => state.cart)
 
   useEffect(() => {
-    dispatch(getCartItems());
-  }, []);
+    dispatch(getCartItems())
+  }, [])
 
   if (isLoading) {
     return (
       <div className='loading'>
         <h1>Loading...</h1>
       </div>
-    );
+    )
   }
 
   return (
@@ -666,10 +667,10 @@ function App() {
       <Navbar />
       <CartContainer />
     </main>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 #### Options
@@ -689,12 +690,12 @@ export const getCartItems = createAsyncThunk(
       // console.log(thunkAPI);
       // console.log(thunkAPI.getState());
       // thunkAPI.dispatch(openModal());
-      const resp = await axios(url);
+      const resp = await axios(url)
 
-      return resp.data;
+      return resp.data
     } catch (error) {
-      return thunkAPI.rejectWithValue('something went wrong');
+      return thunkAPI.rejectWithValue('something went wrong')
     }
   }
-);
+)
 ```
